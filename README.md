@@ -1,12 +1,28 @@
-# React + Vite
+# CodeBox - Code Snippet Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern web application for storing and managing your code snippets. Built with React, Vite, and Supabase.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🔐 User authentication (signup/login)
+- 📝 Create, edit, and delete code snippets
+- 🎨 Syntax highlighting for different programming languages
+- 📱 Responsive design for mobile and desktop
+- 🌙 Dark mode interface
+- 📋 Support for multiple programming languages
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Frontend:
+  - React
+  - React Router DOM
+  - TailwindCSS
+  - React Syntax Highlighter
+
+- Backend/Database:
+  - Supabase (Authentication & Database)
+
+- Development:
+  - Vite
+  - ESLint
+  - Node.js
