@@ -68,8 +68,7 @@ function LoginPage() {
 
           <button
             type="submit"
-            className="w-full py-2 mt-4 bg-white text-black rounded-md font-semibold hover:scale-105 transition disabled:opacity-50"
-            disabled={loading}
+            className="w-full py-2 mt-4 bg-white text-black rounded-md font-semibold hover:scale-105 transition"
           >
             {loading ? 'Logging in...' : 'Login'}
           </button>
