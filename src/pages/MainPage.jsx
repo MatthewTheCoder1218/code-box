@@ -3,6 +3,7 @@ import NewSnippetModal from "./NewSnippetModal";
 import SnippetViewer from "./SnippetViewer";
 import supabase from "../helper/supabaseClient";
 import { useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast';
 
 const MainPage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -76,16 +77,52 @@ const MainPage = () => {
   }, []); // Empty dependency array means this runs once when component mounts
 
   const handleDeleteSnippet = async (snippetId) => {
-    if (!window.confirm('Are you sure you want to delete this snippet?')) {
-      return;
-    }
+    const confirmDelete = () => new Promise((resolve, reject) => {
+      toast((t) => (
+        <div className="flex flex-col gap-3 bg-red-50 p-4 rounded-lg border-2 border-red-500">
+          <div className="flex items-center gap-2">
+            <span className="text-red-500 text-xl">⚠️</span>
+            <p className="text-red-700 font-semibold">Warning: Delete Snippet?</p>
+          </div>
+          <p className="text-red-600 text-sm">This action cannot be undone!</p>
+          <div className="flex gap-2 mt-2">
+            <button
+              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm font-medium transition-colors"
+              onClick={() => {
+                toast.dismiss(t.id);
+                resolve();
+              }}
+            >
+              Yes, Delete
+            </button>
+            <button
+              className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md text-sm font-medium transition-colors"
+              onClick={() => {
+                toast.dismiss(t.id);
+                reject();
+              }}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      ), { 
+        duration: Infinity,
+        style: {
+          background: 'white',
+          padding: '0',
+          borderRadius: '8px',
+        }
+      });
+    });
   
     try {
+      await confirmDelete();
       // Get the current user first
       const { data: { user } } = await supabase.auth.getUser();
   
       if (!user) {
-        setFetchError("You must be logged in to delete snippets.");
+        toast.error("You must be logged in to delete snippets.");
         return;
       }
   
@@ -99,7 +136,7 @@ const MainPage = () => {
         });
   
       if (deleteError) {
-        console.error('Error deleting snippet:', deleteError);
+        toast.error('Error deleting snippet:', deleteError);
         setFetchError('Failed to delete snippet');
         return;
       }
@@ -112,7 +149,7 @@ const MainPage = () => {
         setSelectedSnippet(null);
       }
   
-      console.log('Snippet deleted successfully');
+      toast.success('Snippet deleted successfully');
   
     } catch (error) {
       console.error('Error:', error);

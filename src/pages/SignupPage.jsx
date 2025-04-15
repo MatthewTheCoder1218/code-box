@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import supabase from '../helper/supabaseClient'; // Adjust path if needed
+import toast from 'react-hot-toast';
 
 function SignupPage() {
   const [name, setName] = useState('');
@@ -41,16 +42,17 @@ function SignupPage() {
         .insert([{ id: authData.user.id, full_name: name, email }]);
 
       if (dbError) {
-        console.error("Error inserting user data:", dbError);
+        toast.error("Error creating user profile. Please try again.");
         setMessage("Error creating user profile. Please try again.");
       } else {
         console.log("User data stored in 'users' table");
         setMessage("Account created successfully!");
+        toast.success("Account created successfully!")
         // Redirect to home or another appropriate page
         navigate('/login');
       }
     } catch (error) {
-      console.error("Signup error:", error.message);
+      toast.error("Signup error:", error.message);
       setMessage(error.message);
     } finally {
       setLoading(false);
@@ -112,7 +114,6 @@ function SignupPage() {
           >
             {loading ? 'Signing up...' : 'Sign Up'}
           </button>
-          {message && <span className="mt-2 block text-center">{message}</span>}
         </form>
 
         <p className="mt-4 text-center text-sm">

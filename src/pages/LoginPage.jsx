@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import supabase from '../helper/supabaseClient'; // Adjust the import path if necessary
+import toast from 'react-hot-toast';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -24,11 +25,11 @@ function LoginPage() {
         throw authError;
       }
 
-      console.log('Login successful');
+      toast.success('Login successful');
       setLoading(false);
       navigate('/home'); // Redirect to your home page after successful login
     } catch (err) {
-      console.error('Login error:', err.message);
+      toast.error("Login error: " + err.message);
       setError(err.message);
       setLoading(false);
     }
@@ -64,8 +65,6 @@ function LoginPage() {
               required
             />
           </div>
-
-          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
           <button
             type="submit"

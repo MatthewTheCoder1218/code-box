@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import supabase from "../helper/supabaseClient";
+import toast from 'react-hot-toast';
 
 const NewSnippetModal = ({ onClose, onSave, editingSnippet = null }) => {
   const [title, setTitle] = useState("");
@@ -63,15 +64,15 @@ const NewSnippetModal = ({ onClose, onSave, editingSnippet = null }) => {
       }
 
       if (error) {
-        console.error("Error saving snippet:", error);
+        toast.error("Error saving snippet:", error);
         setError(error.message);
       } else {
-        console.log("Snippet saved successfully:", data);
+        toast.success("Snippet saved successfully");
         onSave(data);
         onClose();
       }
     } catch (err) {
-      console.error("An unexpected error occurred:", err);
+      toast.error("An unexpected error occurred:", err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -84,7 +85,6 @@ const NewSnippetModal = ({ onClose, onSave, editingSnippet = null }) => {
         <h2 className="text-2xl font-bold mb-4">Create New Snippet</h2>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
-          {error && <p className="text-red-500">{error}</p>}
           <div>
             <label className="block text-sm text-gray-300 mb-1">Title</label>
             <input
