@@ -2,6 +2,21 @@ import React from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
+const LANGUAGE_MAP = {
+  javascript: 'javascript',
+  python: 'python',
+  java: 'java',
+  cpp: 'cpp',
+  jsx: 'jsx',
+  typescript: 'typescript',
+  css: 'css',
+  html: 'markup',
+  json: 'json',
+  sql: 'sql',
+  bash: 'bash',
+  markdown: 'markdown'
+};
+
 const SnippetViewer = ({ snippet }) => {
   return (
     <div className="w-full max-w-3xl bg-gray-800 p-6 rounded-2xl shadow-lg">
@@ -12,7 +27,7 @@ const SnippetViewer = ({ snippet }) => {
       </p>
 
       <SyntaxHighlighter
-        language={snippet.language}
+        language={LANGUAGE_MAP[snippet.language]}
         style={vscDarkPlus}
         showLineNumbers
         customStyle={{ borderRadius: "12px", fontSize: "0.9rem" }}

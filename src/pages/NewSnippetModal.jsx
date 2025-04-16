@@ -104,7 +104,17 @@ const NewSnippetModal = ({ onClose, onSave, editingSnippet = null }) => {
               className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg"
             >
               <option value="javascript">JavaScript</option>
+              <option value="react">React</option>
+              <option value="typescript">TypeScript</option>
               <option value="python">Python</option>
+              <option value="java">Java</option>
+              <option value="cpp">C++</option>
+              <option value="css">CSS</option>
+              <option value="html">HTML</option>
+              <option value="json">JSON</option>
+              <option value="sql">SQL</option>
+              <option value="bash">Bash</option>
+              <option value="markdown">Markdown</option>
             </select>
           </div>
 
