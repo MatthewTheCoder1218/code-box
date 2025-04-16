@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage.jsx';
 import SignupPage from './pages/SignupPage.jsx';
 import MainPage from './pages/MainPage.jsx';
 import Wrapper from './pages/Wrapper.jsx';
+import SharePage from './pages/SharePage.jsx';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/share/:id" element={<SharePage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/home" element={
           <Wrapper>

@@ -10,6 +10,40 @@ const NewSnippetModal = ({ onClose, onSave, editingSnippet = null }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const languageGroups = {
+    popular: {
+      label: "Popular",
+      languages: ["javascript", "python", "java"]
+    },
+    web: {
+      label: "Web Development",
+      languages: ["html", "css", "jsx", "typescript"]
+    },
+    system: {
+      label: "System Programming",
+      languages: ["cpp", "bash"]
+    },
+    data: {
+      label: "Data & Markup",
+      languages: ["json", "sql", "markdown"]
+    }
+  };
+  
+  const languageNames = {
+    javascript: "JavaScript",
+    python: "Python",
+    java: "Java",
+    cpp: "C++",
+    html: "HTML",
+    css: "CSS",
+    jsx: "React/JSX",
+    typescript: "TypeScript",
+    json: "JSON",
+    sql: "SQL",
+    bash: "Bash",
+    markdown: "Markdown"
+  };
+
   // Load snippet data if editing
   useEffect(() => {
     if (editingSnippet) {
@@ -85,38 +119,74 @@ const NewSnippetModal = ({ onClose, onSave, editingSnippet = null }) => {
         <h2 className="text-2xl font-bold mb-4">Create New Snippet</h2>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
-          <div>
-            <label className="block text-sm text-gray-300 mb-1">Title</label>
-            <input
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              type="text"
-              placeholder="Snippet title"
-              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg placeholder-gray-400"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm text-gray-300 mb-1">Language</label>
+        <div>
+          <label className="block text-gray-300 mb-1">Title</label>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter snippet title..."
+            required
+            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg placeholder-gray-400
+              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 focus:border-blue-500"
+          />
+        </div>
+        <div>
+          <label className="block text-sm text-gray-300 mb-1">Language</label>
+          <div className="relative">
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
-              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg"
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg 
+                appearance-none hover:border-gray-500 focus:border-blue-500 transition-colors
+                [&>optgroup]:bg-gray-800 [&>optgroup]:text-gray-400 [&>optgroup]:font-semibold [&>optgroup]:py-3
+                [&>optgroup]:px-4 [&>optgroup]:border-b [&>optgroup]:border-gray-600 [&>optgroup]:uppercase [&>optgroup]:text-xs
+                [&>option]:bg-gray-700 [&>option]:text-white [&>option]:py-2 [&>option]:px-4 [&>option]:my-1
+                [&>option:not(:last-child)]:border-b [&>option:not(:last-child)]:border-gray-600/20
+                [&>option:hover]:bg-blue-500 [&>option:checked]:bg-blue-600
+                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              style={{
+                WebkitAppearance: 'none',
+                MozAppearance: 'none',
+                appearance: 'none'
+              }}
             >
-              <option value="javascript">JavaScript</option>
-              <option value="react">React</option>
-              <option value="typescript">TypeScript</option>
-              <option value="python">Python</option>
-              <option value="java">Java</option>
-              <option value="cpp">C++</option>
-              <option value="css">CSS</option>
-              <option value="html">HTML</option>
-              <option value="json">JSON</option>
-              <option value="sql">SQL</option>
-              <option value="bash">Bash</option>
-              <option value="markdown">Markdown</option>
+              <input type="text" name="" id="" />
+              {Object.entries(languageGroups).map(([groupKey, group]) => (
+                <optgroup 
+                  key={groupKey} 
+                  label={group.label}
+                  className="border-b-2 border-gray-600/50 last:border-0"
+                >
+                  {group.languages.map((lang) => (
+                    <option 
+                      key={lang} 
+                      value={lang}
+                      className="capitalize"
+                    >
+                      {languageNames[lang]}
+                    </option>
+                  ))}
+                </optgroup>
+              ))}
             </select>
+            <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+              <svg 
+                className="w-4 h-4 text-gray-400 transition-transform group-hover:text-gray-300" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth="2" 
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
           </div>
+        </div>
 
           <div>
             <label className="block text-sm text-gray-300 mb-1">Code</label>

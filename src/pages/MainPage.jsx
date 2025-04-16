@@ -4,6 +4,7 @@ import SnippetViewer from "./SnippetViewer";
 import supabase from "../helper/supabaseClient";
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
+import { FiShare2 } from 'react-icons/fi';
 
 const MainPage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -180,6 +181,22 @@ const MainPage = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const languageIcons = {
+    javascript: "⚡", // or "🟨"
+    python: "🐍",
+    java: "☕",
+    cpp: "⚙️",
+    html: "🌐",
+    css: "🎨",
+    jsx: "⚛️",
+    typescript: "💪",
+    json: "📦",
+    sql: "🗄️",
+    bash: "💻",
+    markdown: "📝",
+    default: "📄" // fallback icon
+  };
+
   return (
     // Change the outer container to be responsive
     <div className="flex flex-col md:flex-row h-screen bg-gray-900 text-white relative">
@@ -211,41 +228,45 @@ const MainPage = () => {
 
       <div className="flex-1 overflow-y-auto space-y-2 max-h-[70vh] md:max-h-[calc(100vh-200px)]">
       {snippets.map((snip) => (
-    <div
-      key={snip.id}
-      className={`flex items-center justify-between p-2 rounded-lg ${
-        selectedSnippet?.id === snip.id ? "bg-gray-700" : "bg-gray-800"
-      } hover:bg-gray-700`}
-    >
-      <button
-        onClick={() => {
-          setSelectedSnippet(snip);
-          if (window.innerWidth < 768) {
-            setIsSidebarOpen(false);
-          }
-        }}
-        className="text-left flex-1 truncate"
-      >
-        📄 {snip.title}
-      </button>
-      <div className="flex gap-2">
-        <button
-          onClick={() => handleEdit(snip)}
-          className="text-blue-400 hover:text-blue-500"
-          title="Edit snippet"
+        <div
+          key={snip.id}
+          className={`flex items-center justify-between p-2 rounded-lg ${
+            selectedSnippet?.id === snip.id ? "bg-gray-700" : "bg-gray-800"
+          } hover:bg-gray-700`}
         >
-          ✏️
-        </button>
-        <button
-          onClick={() => handleDeleteSnippet(snip.id)}
-          className="text-red-400 hover:text-red-500"
-          title="Delete snippet"
-        >
-          🗑️
-        </button>
-      </div>
-    </div>
-  ))}
+          <button
+            onClick={() => {
+              setSelectedSnippet(snip);
+              if (window.innerWidth < 768) {
+                setIsSidebarOpen(false);
+              }
+            }}
+            className="text-left flex-1 truncate flex items-center gap-2"
+          >
+            <span className="text-lg" role="img" aria-label={snip.language}>
+              {languageIcons[snip.language] || languageIcons.default}
+            </span>
+            <span className="truncate">{snip.title}</span>
+          </button>
+          <div className="flex gap-2">
+
+            <button
+              onClick={() => handleEdit(snip)}
+              className="text-blue-400 hover:text-blue-500"
+              title="Edit snippet"
+            >
+              ✏️
+            </button>
+            <button
+              onClick={() => handleDeleteSnippet(snip.id)}
+              className="text-red-400 hover:text-red-500"
+              title="Delete snippet"
+            >
+              🗑️
+            </button>
+          </div>
+        </div>
+      ))}
       </div>
   
         {/* User info section */}
